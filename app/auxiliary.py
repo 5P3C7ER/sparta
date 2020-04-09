@@ -271,7 +271,7 @@ class Screenshooter(QtCore.QThread):
 
 	def save(self, url, ip, port, outputfile):
 		print '[+] Saving screenshot as: '+str(outputfile)
-		command = "cutycapt --max-wait="+str(self.timeout)+" --url="+str(url)+"/ --out=\""+str(self.outputfolder)+"/"+str(outputfile)+"\""
+		command = "thirdparty/cutycapt/cutycapt --insecure --max-wait="+str(self.timeout)+" --url="+str(url)+"/ --out=\""+str(self.outputfolder)+"/"+str(outputfile)+"\""
 #		print command
 		p = subprocess.Popen(command, shell=True)
 		p.wait()														# wait for command to finish

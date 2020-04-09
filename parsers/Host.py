@@ -108,12 +108,15 @@ class Host:
 				if (len(port_node.getElementsByTagName('service'))) > 0:
 					service_node = port_node.getElementsByTagName('service')[0]
 					service = Service.Service( service_node )
+					#Now nmap add "tunnel" attribute to "https servisec, but the name of service still be "http". Here we add addition check to avoid marking "https" as "http"
+					if port_node.getElementsByTagName('service')[0].getAttribute('name') == "http" and port_node.getElementsByTagName('service')[0].getAttribute('tunnel') == "ssl":
+						service.name = "https"
 					return service
 		return None
 
 if __name__ == '__main__':
 
-    dom = xml.dom.minidom.parse('/tmp/test_pwn01.xml')
+    dom = xml.dom.minidom.parse('/home/ade/Temp/dsec.xml')
     host_nodes = dom.getElementsByTagName('host')
 
     if len(host_nodes) == 0:
@@ -135,7 +138,7 @@ if __name__ == '__main__':
         print scr.output
 
     print "service of tcp port 80:"
-    s = h.get_service( 'tcp', '80' )
+    s = h.get_service( 'tcp', '443' )
     if s == None:
         print "\tno service"
 

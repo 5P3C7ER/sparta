@@ -60,17 +60,17 @@ class AppSettings():
 		self.actions.endGroup()
 
 		self.actions.beginGroup('StagedNmapSettings')
-		self.actions.setValue('stage1-ports','T:80,443')
-		self.actions.setValue('stage2-ports','T:25,135,137,139,445,1433,3306,5432,U:137,161,162,1434')
-		self.actions.setValue('stage3-ports','T:23,21,22,110,111,2049,3389,8080,U:500,5060')
-		self.actions.setValue('stage4-ports','T:0-20,24,26-79,81-109,112-134,136,138,140-442,444,446-1432,1434-2048,2050-3305,3307-3388,3390-5431,5433-8079,8081-29999')
-		self.actions.setValue('stage5-ports','T:30000-65535')
+		self.actions.setValue('stage1-ports','T:22,80,443,445')
+		self.actions.setValue('stage2-ports','T:25,135,137,139,1433,3306,5432,U:137,161,162,1434')
+		self.actions.setValue('stage3-ports','T:23,21,110,111,1521,2049,3389,4786,8080,U:500,5060')
+		self.actions.setValue('stage4-ports','T:0-20,24,26-79,81-109,112-134,136,138,140-442,444,446-1432,1434-1520,1522-2048,2050-3305,3307-3388,3390-4785,4787-5431,5433-8079,8081-9999')
+		self.actions.setValue('stage5-ports','T:10000-65535')
 		self.actions.endGroup()
 
 		self.actions.beginGroup('ToolSettings')
 		self.actions.setValue('nmap-path','/usr/bin/nmap')
 		self.actions.setValue('hydra-path','/usr/bin/hydra')
-		self.actions.setValue('cutycapt-path','/usr/bin/cutycapt')
+		self.actions.setValue('cutycapt-path','./thirdparty/cutycapt/cutycapt')
 		self.actions.setValue('texteditor-path','/usr/bin/leafpad')
 		self.actions.endGroup()
 
@@ -134,6 +134,12 @@ class AppSettings():
 		self.actions.setValue("snmp-brute", ["Bruteforce community strings (medusa)", "bash -c \"medusa -h [IP] -u root -P ./wordlists/snmp-default.txt -M snmp | grep SUCCESS\"", "snmp,snmptrap"])
 		self.actions.setValue("oracle-version", ["Get version", "msfcli auxiliary/scanner/oracle/tnslsnr_version rhosts=[IP] E", "oracle-tns"])
 		self.actions.setValue("oracle-sid", ["Oracle SID enumeration", "msfcli auxiliary/scanner/oracle/sid_enum rhosts=[IP] E", "oracle-tns"])
+
+		### WEB
+		self.actions.setValue("ffuf-service_files-http", ["Run ffuf for search service_files, http", "./thirdparty/ffuf/ffuf -w ./wordlists/web.txt -u http://[HOSTNAME]:[PORT]/FUZZ -ac -r -s -fc 301,302,303,307,400,401,403,404,502,503 | xargs -I {} echo \"http://[IP]:[PORT]/\"{} ", "http,soap,http-proxy,http-alt"])		
+		self.actions.setValue("ffuf-service_files-https", ["Run ffuf for search service_files, https", "./thirdparty/ffuf/ffuf -w ./wordlists/web.txt -u https://[HOSTNAME]:[PORT]/FUZZ -ac -r -s -fc 301,302,303,307,400,401,403,404,502,503 | xargs -I {} echo \"http://[IP]:[PORT]/\"{} ", "https,ssl,http-proxy"])		
+
+
 		###
 		self.actions.endGroup()
 
@@ -155,7 +161,7 @@ class AppSettings():
 		self.actions.endGroup()
 
 		self.actions.beginGroup('SchedulerSettings')
-		self.actions.setValue("nikto",["http,https,ssl,soap,http-proxy,http-alt,https-alt","tcp"])
+#		self.actions.setValue("nikto",["http,https,ssl,soap,http-proxy,http-alt,https-alt","tcp"])
 		self.actions.setValue("screenshooter",["http,https,ssl,http-proxy,http-alt,https-alt","tcp"])
 		self.actions.setValue("smbenum",["microsoft-ds","tcp"])
 #		self.actions.setValue("enum4linux","netbios-ssn,microsoft-ds")
@@ -170,6 +176,8 @@ class AppSettings():
 		self.actions.setValue("ftp-default",["ftp","tcp"])
 		self.actions.setValue("postgres-default",["postgresql","tcp"])
 		self.actions.setValue("oracle-default",["oracle-tns","tcp"])
+		self.actions.setValue("ffuf-service_files-http",["http,soap,http-proxy,http-alt","tcp"])		
+		self.actions.setValue("ffuf-service_files-https",["https,ssl,http-proxy","tcp"])		
 
 		self.actions.endGroup()
 		
@@ -352,15 +360,16 @@ class Settings():
 		self.brute_no_password_services = "oracle-sid,rsh,smtp-enum"
 
 		# tools
-		self.tools_nmap_stage1_ports = "T:80,443"
-		self.tools_nmap_stage2_ports = "T:25,135,137,139,445,1433,3306,5432,U:137,161,162,1434"
-		self.tools_nmap_stage3_ports = "T:23,21,22,110,111,2049,3389,8080,U:500,5060"
-		self.tools_nmap_stage4_ports = "T:0-20,24,26-79,81-109,112-134,136,138,140-442,444,446-1432,1434-2048,2050-3305,3307-3388,3390-5431,5433-8079,8081-29999"
-		self.tools_nmap_stage5_ports = "T:30000-65535"
+		self.tools_nmap_stage1_ports = "T:22,80,443,445"
+		self.tools_nmap_stage2_ports = "T:25,135,137,139,1433,3306,5432,U:137,161,162,1434"
+		self.tools_nmap_stage3_ports = "T:23,21,110,111,1521,2049,3389,4786,8080,U:500,5060"
+		self.tools_nmap_stage4_ports = "T:0-20,24,26-79,81-109,112-134,136,138,140-442,444,446-1432,1434-1520,1522-2048,2050-3305,3307-3388,3390-4785,4787-5431,5433-8079,8081-9999"
+		self.tools_nmap_stage5_ports = "T:10000-65535"
+
 
 		self.tools_path_nmap = "/usr/bin/nmap"
 		self.tools_path_hydra = "/usr/bin/hydra"
-		self.tools_path_cutycapt = "/usr/bin/cutycapt"
+		self.tools_path_cutycapt = "./thirdparty/cutycapt/cutycapt"
 		self.tools_path_texteditor = "/usr/bin/leafpad"
 
 		self.hostActions = []

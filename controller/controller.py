@@ -630,13 +630,19 @@ class Controller():
 					if p.state == 'open':
 						s = p.get_service()
 						if not (s is None):
-							self.runToolsFor(s.name, h.ip, p.portId, p.protocol)
+							if h.hostname:
+								self.runToolsFor(s.name, h.ip, p.portId, p.protocol, h.hostname)
+							else:
+								self.runToolsFor(s.name, h.ip, p.portId, p.protocol)
 					
 			print '-----------------------------------------------'
 		print '[+] Scheduler ended!'
 
-	def runToolsFor(self, service, ip, port, protocol='tcp'):
+	def runToolsFor(self, service, ip, port, protocol='tcp', hostname=None):
 		print '\t[+] Running tools for: ' + service + ' on ' + ip + ':' + port
+
+		if not hostname:
+			hostname = ip
 
 		if service.endswith("?"):										# when nmap is not sure it will append a ?, so we need to remove it
 			service=service[:-1]

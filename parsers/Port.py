@@ -24,7 +24,10 @@ class Port:
 		service_node = self.port_node.getElementsByTagName('service')
 		
 		if len(service_node) > 0:
-			return Service.Service(service_node[0])
+			service = Service.Service(service_node[0])
+			if self.port_node.getElementsByTagName('service')[0].getAttribute('name') == "http" and self.port_node.getElementsByTagName('service')[0].getAttribute('tunnel') == "ssl":
+				service.name = "https"
+			return service
 
 		return None
 
