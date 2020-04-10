@@ -661,7 +661,7 @@ class Controller():
 							tabtitle = a[1]+" ("+port+"/"+protocol+")"
 							outputfile = self.logic.runningfolder+"/"+re.sub("[^0-9a-zA-Z]", "", str(tool[0]))+"/"+getTimestamp()+'-'+a[1]+"-"+ip+"-"+port
 							command = str(a[2])
-							command = command.replace('[IP]', ip).replace('[PORT]', port).replace('[OUTPUT]', outputfile)
+							command = command.replace('[IP]', ip).replace('[PORT]', port).replace('[OUTPUT]', outputfile).replace('[HOSTNAME]', hostname)
 
 							if 'nmap' in tabtitle:							# we don't want to show nmap tabs
 								restoring = True

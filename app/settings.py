@@ -136,8 +136,10 @@ class AppSettings():
 		self.actions.setValue("oracle-sid", ["Oracle SID enumeration", "msfcli auxiliary/scanner/oracle/sid_enum rhosts=[IP] E", "oracle-tns"])
 
 		### WEB
-		self.actions.setValue("ffuf-service_files-http", ["Run ffuf for search service_files, http", "./thirdparty/ffuf/ffuf -w ./wordlists/web.txt -u http://[HOSTNAME]:[PORT]/FUZZ -ac -r -s -fc 301,302,303,307,400,401,403,404,502,503 | xargs -I {} echo \"http://[IP]:[PORT]/\"{} ", "http,soap,http-proxy,http-alt"])		
-		self.actions.setValue("ffuf-service_files-https", ["Run ffuf for search service_files, https", "./thirdparty/ffuf/ffuf -w ./wordlists/web.txt -u https://[HOSTNAME]:[PORT]/FUZZ -ac -r -s -fc 301,302,303,307,400,401,403,404,502,503 | xargs -I {} echo \"http://[IP]:[PORT]/\"{} ", "https,ssl,http-proxy"])		
+		#self.actions.setValue("ffuf-service_files-http", ["Run ffuf for search service_files, http", "./thirdparty/ffuf/ffuf -w ./wordlists/web.txt -u http://[HOSTNAME]:[PORT]/FUZZ -ac -r -s -fc 301,302,303,307,400,401,403,404,502,503 | xargs -I {} echo \"http://[IP]:[PORT]/\"{} ", "http,soap,http-proxy,http-alt"])		
+		#self.actions.setValue("ffuf-service_files-https", ["Run ffuf for search service_files, https", "./thirdparty/ffuf/ffuf -w ./wordlists/web.txt -u https://[HOSTNAME]:[PORT]/FUZZ -ac -r -s -fc 301,302,303,307,400,401,403,404,502,503 | xargs -I {} echo \"http://[IP]:[PORT]/\"{} ", "https,ssl,http-proxy"])		
+		self.actions.setValue("dirsearch-service_files-https", ["Run dirsearch for search service_files, https", "python3 ./thirdparty/dirsearch/dirsearch.py -u https://[HOSTNAME]:[PORT]/ -w ./wordlists/web.txt -t 5 -e asa,asm,asmx,asp,aspx,bac,backup,bak,bk,cache,cfg,cfm,cgi,class,conf,config,cs,dif,dist,dll,dump,ear,exe,gz,hta,htm,html,htmlx,inc,ini,jar,java,js,json,jsp,jspx,log,lol,lst,map,new,old,part,pdf,phar,php,php3,php4,php5,php7,pht,phtml,pl,properties,py,pyc,rar,rb,sav,save,save1,settings,sql,sublime-project,sublime-workspace,swf,swm,swn,swo,swp,tar,targz,temp,temp1,test,tests,tgz,tmp,tmp1,txt,vb,vbproj,vi,war,xls,xlsx,xml,zip -x 403,302,301,400,401,500,503 -r --random-agents", "https,ssl,http-proxy"])
+		self.actions.setValue("dirsearch-service_files-http", ["Run dirsearch for search service_files, http", "python3 ./thirdparty/dirsearch/dirsearch.py -u http://[HOSTNAME]:[PORT]/ -w ./wordlists/web.txt -t 5 -e asa,asm,asmx,asp,aspx,bac,backup,bak,bk,cache,cfg,cfm,cgi,class,conf,config,cs,dif,dist,dll,dump,ear,exe,gz,hta,htm,html,htmlx,inc,ini,jar,java,js,json,jsp,jspx,log,lol,lst,map,new,old,part,pdf,phar,php,php3,php4,php5,php7,pht,phtml,pl,properties,py,pyc,rar,rb,sav,save,save1,settings,sql,sublime-project,sublime-workspace,swf,swm,swn,swo,swp,tar,targz,temp,temp1,test,tests,tgz,tmp,tmp1,txt,vb,vbproj,vi,war,xls,xlsx,xml,zip -x 403,302,301,400,401,500,503 -r --random-agents", "http,soap,http-proxy,http-alt"])
 
 
 		###
@@ -176,8 +178,10 @@ class AppSettings():
 		self.actions.setValue("ftp-default",["ftp","tcp"])
 		self.actions.setValue("postgres-default",["postgresql","tcp"])
 		self.actions.setValue("oracle-default",["oracle-tns","tcp"])
-		self.actions.setValue("ffuf-service_files-http",["http,soap,http-proxy,http-alt","tcp"])		
-		self.actions.setValue("ffuf-service_files-https",["https,ssl,http-proxy","tcp"])		
+		#self.actions.setValue("ffuf-service_files-http",["http,soap,http-proxy,http-alt","tcp"])		
+		#self.actions.setValue("ffuf-service_files-https",["https,ssl,http-proxy","tcp"])
+		self.actions.setValue("dirsearch-service_files-https",["https,ssl,http-proxy","tcp"])
+		self.actions.setValue("dirsearch-service_files-http",["http,soap,http-proxy,http-alt","tcp"])		
 
 		self.actions.endGroup()
 		
